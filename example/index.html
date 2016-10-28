@@ -47,7 +47,8 @@
     <script>
       ReactiveListener.add(document.getElementById('scaling-button'), {
         'PointerY': {
-          property: 'scale',
+          property: 'transform',
+          transform: 'scale',
           unit: '',
           range: [1, 2],
           directional: false,
@@ -57,21 +58,33 @@
       });
 
       ReactiveListener.add(document.getElementById('runaway-form'), {
+        'PointerY': [
+          {
+            property: 'transform',
+            transform: 'scale',
+            unit: '',
+            range: [1, 0.01],
+            directional: false,
+            start: 0.01,
+            relative: 'viewport'
+          },
+          {
+            property: 'transform',
+            transform: 'rotateZ',
+            unit: 'deg',
+            range: [-720, 720],
+            directional: true,
+            start: 0,
+            relative: 'viewport'
+          }
+        ],
         'PointerX': {
-          property: 'scale',
-          unit: '',
-          range: [1, 0.01],
-          directional: false,
-          start: 0.01,
-          relative: 'viewport'
-        },
-        'PointerY': {
-          property: 'rotateZ',
-          unit: 'deg',
-          range: [-720, 720],
-          directional: true,
-          start: 0,
-          relative: 'viewport'
+            property: 'opacity',
+            unit: '',
+            range: [1, 0.01],
+            directional: false,
+            start: 0.01,
+            relative: 'viewport'
         }
       });
       ReactiveListener.start();

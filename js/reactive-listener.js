@@ -3,6 +3,7 @@
     elements: []
   };
 
+
   // For now use options that look something like:
   //{
   //  'PointerX': {
@@ -17,9 +18,15 @@
   //  },
   //}
   ReactiveListener.add = function(elem, options) {
-    var item = {elem: elem, options: options};
+    var i, item = {elem: elem, options: options};
     for (var key in options) {
-      item.options[key].current = options[key].start || 0;
+      if(Array.isArray(options[key])) {
+        for(i = 0; i < options[key].length; i++) {
+          item.options[key][i].current = options[key][i].start || 0;
+        }
+      } else {
+        item.options[key].current = options[key].start || 0;
+      }
     }
     // TODO:  I think we'll need to do this at least on resize & scroll,
     // to account for things like fixed positioning.
@@ -67,9 +74,9 @@
     return current + (target - current) * ( ease || 0.05 );
   }
 
-  function calculateTargetAndEase(item, trigger, dist) {
-    var near = item.options[trigger].range[0],
-        far = item.options[trigger].range[1],
+  function calculateTargetAndEase(transform, trigger, dist) {
+    var near = transform.range[0],
+        far = transform.range[1],
         range = Math.abs(far - near),
         mid = near + far / 2,
         target, easer, bounds;
@@ -79,14 +86,14 @@
       bounds = ReactiveListener.winRect.height;
     }
 
-    if(!item.options[trigger].directional) { dist = Math.abs(dist) }
+    if(!transform.directional) { dist = Math.abs(dist) }
 
     if(dist > bounds) {
       target = far;
     } else if (dist < -bounds) {
       target = near;
     } else {
-      if(item.options[trigger].directional) {
+      if(transform.directional) {
         if(dist < 0) {
           target = mid - ((near - mid) * (dist / bounds));
         } else if(dist > 0){
@@ -99,7 +106,7 @@
       }
     }
     var easer = Math.min(range / 20.0, 0.05);
-    return {target: target, newValue: ease(item.options[trigger].current, target, easer)}
+    return {target: target, newValue: ease(transform.current, target, easer)}
   }
 
   ReactiveListener.setWindowDims = function() {
@@ -128,23 +135,38 @@
   }
 
   ReactiveListener.render = function() {
-    var i, item, box, dist, trigger, changeSet, changeStr, changed = false;
+    var i, j, item, box, dist, trigger, changeSet, changeStrs, change,
+        transforms, changed = false;
     ReactiveListener.setWindowDims(); // TODO:  Should this go here?  Or only on scroll/resize?
     if(ReactiveListener.mouse) {
       for(i = 0; i < ReactiveListener.elements.length; i++) {
         item = ReactiveListener.elements[i];
         box = item.box;
         dist = {'PointerX': calcXDist(item), 'PointerY': calcYDist(item)};
-        changeStr = '';
+        changeStrs = {};
         for(trigger in item.options) {
-          changeSet = calculateTargetAndEase(item, trigger, dist[trigger]);
-          item.options[trigger].current = changeSet.newValue;
-          changeStr = changeStr + item.options[trigger].property + '(' + changeSet.newValue + item.options[trigger].unit + ')';
-          if(changeSet.newValue != changeSet.target) {
-            changed = true;
+          if(Array.isArray(item.options[trigger])) {
+            transforms = item.options[trigger];
+          }  else {
+            transforms = [item.options[trigger]]
+          }
+          for (j = 0; j < transforms.length; j++) {
+            changeSet = calculateTargetAndEase(transforms[j], trigger, dist[trigger]);
+            transforms[j].current = changeSet.newValue;
+            if(transforms[j].property === 'transform') {
+              changeStrs['transform'] = changeStrs['transform'] || '';
+              changeStrs['transform'] = changeStrs['transform'] + transforms[j].transform + '(' + changeSet.newValue + transforms[j].unit + ') ';
+            } else {
+              changeStrs[transforms[j].property] = '' + changeSet.newValue + transforms[j].unit;
+            }
+            if(changeSet.newValue != changeSet.target) {
+              changed = true;
+            }
           }
         }
-        item.elem.style.transform = changeStr;
+        for(change in changeStrs) {
+          item.elem.style[change]= changeStrs[change];
+        }
       }
       if(changed == true) {
         window.requestAnimationFrame(ReactiveListener.render);
