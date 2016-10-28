@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZURB Reactive Listener | Demo</title>
+    <link rel="stylesheet" href="css/foundation.min.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Reactive Listener Demo</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-8 columns">
+        <div class="callout large">
+          <h5>Y-axis Scaling Button</h5>
+          <p>
+          <a id="scaling-button" href="#0" class="button primary">Watch Me Scale</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="content">
+      <div class="large-8 medium-8 columns">
+        <h5>Spin-in input</h5>
+        <form>
+          <div class="row">
+            <div id='runaway-form' class="large-12 columns">
+              <label>Why hello there</label>
+              <input id="testInput" type="text" placeholder="Enter some text here" />
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <script src="../js/reactive-listener.js"></script>
+    <script>
+      ReactiveListener.add(document.getElementById('scaling-button'), {
+        'PointerY': {
+          property: 'scale',
+          unit: '',
+          range: [1, 2],
+          directional: false,
+          start: 1,
+          relative: 'viewport'
+        }
+      });
+
+      ReactiveListener.add(document.getElementById('runaway-form'), {
+        'PointerX': {
+          property: 'scale',
+          unit: '',
+          range: [1, 0.01],
+          directional: false,
+          start: 0.01,
+          relative: 'viewport'
+        },
+        'PointerY': {
+          property: 'rotateZ',
+          unit: 'deg',
+          range: [-720, 720],
+          directional: true,
+          start: 0,
+          relative: 'viewport'
+        }
+      });
+      ReactiveListener.start();
+
+    </script>
+  </body>
+</html>

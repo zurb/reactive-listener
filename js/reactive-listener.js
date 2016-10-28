@@ -68,33 +68,34 @@
   }
 
   function calculateTargetAndEase(item, trigger, dist) {
-    var min = item.options[trigger].range[0],
-        max = item.options[trigger].range[1],
-        range = Math.abs(max - min),
-        mid = min + ((max - min) / 2),
+    var near = item.options[trigger].range[0],
+        far = item.options[trigger].range[1],
+        range = Math.abs(far - near),
+        mid = near + far / 2,
         target, easer, bounds;
     if(trigger == 'PointerX') {
       bounds = ReactiveListener.winRect.width;
     } else {
       bounds = ReactiveListener.winRect.height;
     }
+
     if(!item.options[trigger].directional) { dist = Math.abs(dist) }
 
     if(dist > bounds) {
-      target = max;
+      target = far;
     } else if (dist < -bounds) {
-      target = min;
+      target = near;
     } else {
       if(item.options[trigger].directional) {
         if(dist < 0) {
-          target = mid - ((min - mid) * (dist / bounds));
+          target = mid - ((near - mid) * (dist / bounds));
         } else if(dist > 0){
-          target = mid + ((max - mid) * (dist / bounds));
+          target = mid + ((far - mid) * (dist / bounds));
         } else {
           target = mid;
         }
       } else {
-        target = min + ((max - min) * (dist / bounds));
+        target = near + ((far - near) * (dist / bounds));
       }
     }
     var easer = Math.min(range / 20.0, 0.05);
@@ -143,10 +144,10 @@
             changed = true;
           }
         }
-        if(changed == true) {
-          item.elem.style.transform = changeStr;
-          window.requestAnimationFrame(ReactiveListener.render);
-        }
+        item.elem.style.transform = changeStr;
+      }
+      if(changed == true) {
+        window.requestAnimationFrame(ReactiveListener.render);
       }
     }
 
