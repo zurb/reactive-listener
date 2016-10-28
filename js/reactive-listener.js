@@ -79,11 +79,11 @@
         far = transform.range[1],
         range = Math.abs(far - near),
         mid = near + far / 2,
-        target, easer, bounds;
+        maxDist, target, easer, bounds;
     if(trigger == 'PointerX') {
-      bounds = ReactiveListener.winRect.width;
+      bounds = transform.maxDist || ReactiveListener.winRect.width;
     } else {
-      bounds = ReactiveListener.winRect.height;
+      bounds = transform.maxDist || ReactiveListener.winRect.height;
     }
 
     if(!transform.directional) { dist = Math.abs(dist) }
@@ -152,11 +152,17 @@
           }
           for (j = 0; j < transforms.length; j++) {
 
+            // Thresholds
+            if(transforms[j].minDist && (transforms[j].minDist > Math.abs(dist[trigger]))) { continue; }
+            if(transforms[j].maxDist && (transforms[j].maxDist < Math.abs(dist[trigger]))) { continue; }
+
+            // JS Callback
             if(transforms[j].callback) {
               transforms[j].callback({item: item, dist: dist, mousePosition: ReactiveListener.mouse});
               continue;
             }
 
+            // Straight CSS properties
             changeSet = calculateTargetAndEase(transforms[j], trigger, dist[trigger]);
             transforms[j].current = changeSet.newValue;
             if(transforms[j].property === 'transform') {
