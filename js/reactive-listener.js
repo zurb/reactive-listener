@@ -151,6 +151,12 @@
             transforms = [item.options[trigger]]
           }
           for (j = 0; j < transforms.length; j++) {
+
+            if(transforms[j].callback) {
+              transforms[j].callback({item: item, dist: dist, mousePosition: ReactiveListener.mouse});
+              continue;
+            }
+
             changeSet = calculateTargetAndEase(transforms[j], trigger, dist[trigger]);
             transforms[j].current = changeSet.newValue;
             if(transforms[j].property === 'transform') {

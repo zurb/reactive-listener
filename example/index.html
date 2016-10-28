@@ -7,6 +7,58 @@
     <title>ZURB Reactive Listener | Demo</title>
     <link rel="stylesheet" href="css/foundation.min.css" />
     <style>
+      @-webkit-keyframes #{$name} {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-moz-keyframes #{$name} {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-ms-keyframes #{$name} {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+  
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .pulse {
+        -webkit-animation: pulse 1s ease-in;;
+           -moz-animation: pulse 1s ease-in;;
+            -ms-animation: pulse 1s ease-in;;
+                animation: pulse 1s ease-in;;
+
+      }
     </style>
   </head>
   <body>
@@ -46,7 +98,7 @@
     <script src="../js/reactive-listener.js"></script>
     <script>
       ReactiveListener.add(document.getElementById('scaling-button'), {
-        'PointerY': {
+        'PointerY': [{
           property: 'transform',
           transform: 'scale',
           unit: '',
@@ -54,7 +106,20 @@
           directional: false,
           start: 1,
           relative: 'viewport'
+        },
+        {
+          callback: function(opts) {
+            if((opts.dist['PointerY'] === 0) && (opts.dist['PointerX'] === 0)) {
+              if(opts.item.elem.className !== 'button primary pulse') {
+                opts.item.elem.className = 'button primary pulse';
+                setTimeout(function() {
+                  opts.item.elem.class = 'button primary';
+                }, 1000);
+              }
+            }
+          }
         }
+        ]
       });
 
       ReactiveListener.add(document.getElementById('runaway-form'), {
