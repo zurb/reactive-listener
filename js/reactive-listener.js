@@ -74,16 +74,22 @@
     return current + (target - current) * ( ease || 0.05 );
   }
 
+  function distVal(x, y) {
+    return Math.sqrt(x*x + y*y);
+  }
+
   function calculateTargetAndEase(transform, trigger, dist) {
     var near = transform.range[0],
         far = transform.range[1],
         range = Math.abs(far - near),
         mid = near + far / 2,
         maxDist, target, easer, bounds;
-    if(trigger == 'PointerX') {
+    if(trigger === 'PointerX') {
       bounds = transform.maxDist || ReactiveListener.winRect.width;
-    } else {
+    } else if (trigger === 'PointerY') {
       bounds = transform.maxDist || ReactiveListener.winRect.height;
+    } else {
+      bounds = transform.maxDist || distVal(ReactiveListener.winRect.height, ReactiveListener.winRect.width);
     }
 
     if(!transform.directional) { dist = Math.abs(dist) }
@@ -134,6 +140,10 @@
     }
   }
 
+  function calc2dDist(item) {
+    return distVal(calcXDist(item), calcYDist(item));
+  }
+
   ReactiveListener.render = function() {
     var i, j, item, box, dist, trigger, changeSet, changeStrs, change,
         transforms, changed = false;
@@ -142,7 +152,7 @@
       for(i = 0; i < ReactiveListener.elements.length; i++) {
         item = ReactiveListener.elements[i];
         box = item.box;
-        dist = {'PointerX': calcXDist(item), 'PointerY': calcYDist(item)};
+        dist = {'PointerX': calcXDist(item), 'PointerY': calcYDist(item), 'Pointer2d': calc2dDist(item) };
         changeStrs = {};
         for(trigger in item.options) {
           if(Array.isArray(item.options[trigger])) {
