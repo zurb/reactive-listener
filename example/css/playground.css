@@ -35,16 +35,21 @@
   background-color: #fff;
   z-index: 1;
 }
-.open-prompt .glow {
+.open-prompt:hover {
+  box-shadow: inset 0 0 15px 0px #0ff;
+}
+
+.open-prompt .glow, .open-prompt .inner-glow {
   position: absolute;
   width: 50px;
   height: 50px;
   border-radius: 5000px;
-  box-shadow: 0 0 50px 20px #0ff;
   opacity: 0;
   left: -1px;
   top: -1px;
+  box-shadow: 0 0 100px 10px #0ff;
 }
+
 
 .open-prompt:before {
   content: "+";

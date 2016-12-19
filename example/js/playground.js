@@ -5,7 +5,18 @@ ReactiveListener.add($('[data-open-prompt] .glow')[0], {
     property: 'opacity',
     unit: '',
     range: [1, 0],
-    maxDist: 150,
+    maxDist: 250,
+    forceMax: true,
+    directional: false,
+    start: 0,
+    relative: 'viewport'
+  },
+  {
+    property: 'opacity',
+    unit: '',
+    range: [0, 1],
+    maxDist: 80,
+    forceMax: false,
     directional: false,
     start: 0,
     relative: 'viewport'
@@ -14,7 +25,6 @@ ReactiveListener.add($('[data-open-prompt] .glow')[0], {
     callback: function(opts) {
       var dist = opts.dist['Pointer2d'];
       if(dist === 0) {
-        $(opts.item.elem).css({'opacity': 0});
         return false;
       } else {
         if(dist < 50) {
