@@ -162,16 +162,17 @@
           }
           for (j = 0; j < transforms.length; j++) {
 
-            // Thresholds
-            if(transforms[j].minDist && (transforms[j].minDist > Math.abs(dist[trigger]))) { continue; }
-            if(transforms[j].maxDist && (transforms[j].maxDist < Math.abs(dist[trigger]))) { continue; }
-
             // JS Callback
             if(transforms[j].callback) {
-              transforms[j].callback({item: item, dist: dist, mousePosition: ReactiveListener.mouse});
-              continue;
+              var resp = transforms[j].callback({item: item, dist: dist, mousePosition: ReactiveListener.mouse});
+              // if callback returns false, apply no changes to this elem.
+              if(resp === false) {
+                changeStrs = [];
+                break;
+              } else {
+                continue;
+              }
             }
-
             // Straight CSS properties
             changeSet = calculateTargetAndEase(transforms[j], trigger, dist[trigger]);
             transforms[j].current = changeSet.newValue;
@@ -201,6 +202,10 @@
 
   ReactiveListener.start = function() {
     document.addEventListener('mousemove', ReactiveListener.handleMouseMove);
+  }
+
+  ReactiveListener.stop = function() {
+    document.removeEventListener('mousemove', ReactiveListener.handleMouseMove);
   }
 
 })();

@@ -1,0 +1,58 @@
+.hidden-area {
+  padding-top: 40px;
+  border: 1px dashed #ccc;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 0px;
+  position: relative;
+  top: -40px;
+}
+
+.open-container {
+  position: relative;
+  margin-top: 20px;
+}
+
+.open-container:before {
+  content: "";
+  border-bottom: 1px dashed #ccc;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+.open-prompt {
+  display: block;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 5000px;
+  border: 1px solid #222;
+  text-align: center;
+  position: relative;
+  background-color: #fff;
+  z-index: 1;
+}
+.open-prompt .glow {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 5000px;
+  box-shadow: 0 0 50px 20px #0ff;
+  opacity: 0;
+  left: -1px;
+  top: -1px;
+}
+
+.open-prompt:before {
+  content: "+";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.open-prompt.open:before {
+  content: "-";
+}
