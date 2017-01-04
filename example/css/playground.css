@@ -1,6 +1,6 @@
 .hidden-area {
-  padding-top: 40px;
-  border: 1px dashed #ccc;
+  padding-top: 22px;
+  border: 2px dashed #ccc;
   opacity: 0;
   height: 0;
   overflow: hidden;
@@ -16,7 +16,7 @@
 
 .open-container:before {
   content: "";
-  border-bottom: 1px dashed #ccc;
+  border-bottom: 2px dashed #ccc;
   width: 100%;
   position: absolute;
   left: 0;
@@ -36,18 +36,18 @@
   z-index: 1;
 }
 .open-prompt:hover {
-  box-shadow: inset 0 0 15px 0px #0ff;
+  box-shadow: inset 0 0 15px 0px #1e78ff;
 }
 
 .open-prompt .glow, .open-prompt .inner-glow {
   position: absolute;
   width: 50px;
   height: 50px;
-  border-radius: 5000px;
+  border-radius: 50%;
   opacity: 0;
   left: -1px;
   top: -1px;
-  box-shadow: 0 0 100px 10px #0ff;
+  box-shadow: 0 0 100px 10px #1e78ff;
 }
 
 
@@ -57,7 +57,55 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  color: #000;
 }
+
 .open-prompt.open:before {
   content: "-";
 }
+
+
+
+.bg-container {
+  background: url('../img/bg-tile-reactive.png') repeat-x;
+  width: 100%;
+  height: 468px;
+}
+
+.title-box {
+  background: #0D2B3B;
+  opacity: 0.93;
+}
+
+.rl-title-box {
+  max-width: 600px;
+  margin-top: 60px;
+  padding: 11px 22px;
+}
+
+.rl-title,
+.rl-subtitle,
+.rl-body {
+  color: white;
+  font-family: Proxima Nova, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+}
+
+.rl-title {
+  font-weight: 700;
+  font-size: 36px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.rl-subtitle {
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.main-content {
+  padding-top: 40px;
+
+}
+

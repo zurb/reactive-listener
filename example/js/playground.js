@@ -5,7 +5,7 @@ ReactiveListener.add($('[data-open-prompt] .glow')[0], {
     property: 'opacity',
     unit: '',
     range: [1, 0],
-    maxDist: 250,
+    maxDist: 450,
     forceMax: true,
     directional: false,
     start: 0,
@@ -28,8 +28,10 @@ ReactiveListener.add($('[data-open-prompt] .glow')[0], {
         return false;
       } else {
         if(dist < 50) {
-          var height = ((50 - dist) / 50) * 150;
+          var height = ((50 - dist) / 50) * 50;
           $('#hidden-area').css({height: height, opacity: (50 - dist)/100});
+        } else {
+          $('#hidden-area').css({height: 0, opacity: 0});
         }
       }
     }
@@ -43,10 +45,10 @@ $opener.click(function() {
   if($opener.hasClass('open')) {
     $opener.removeClass('open');
     ReactiveListener.start();
-    $('.hidden-area').animate({opacity: 0.5, height: '150px'});
+    $('.hidden-area').animate({opacity: 0.5, height: '50px'});
   } else {
     $opener.addClass('open');
     ReactiveListener.stop();
-    $('.hidden-area').animate({opacity: 1, height: '300px'});
+    $('.hidden-area').animate({opacity: 1, height: '150px'});
   }
 });
