@@ -12,7 +12,7 @@
 
   <div class="bg-container">
     <div class="row">
-      <div class="medium-8 medium-centered columns">
+      <div class="medium-7 medium-centered columns">
         <div class="rl-title-box title-box">
           <h1 class="rl-title">Re·ac·tive [Listener]</h1>
           <p class="rl-subtitle">adjective</p>
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="row" id="content">
-      <div class="medium-8 medium-centered columns">
+      <div class="medium-7 medium-centered columns">
         <p class="open-container">
         <a href="#" class="open-prompt" data-open-prompt="hidden-area"><span class="glow"></span></a>
         </p>
@@ -39,9 +39,27 @@
   </div>
 
   <div class="row">
-    <div class="medium-8 medium centered columns">
+    <div class="medium-7 medium-centered columns">
       <div class="main-content">
-        Lorem
+        <div class="title-box rl-section-title">
+          <h2>Looking beyond :hover and :active</h2>
+        </div>
+        <p>
+          What if you wanted to make a user aware of a piece of content long before their mouse directly hovers over it’s element? Perhaps it was a piece of content that a user would have never otherwise hovered over (thus rendering all that css you styled on the :hover of your class forever invisible to your user). What is a designer/developer to do?
+        </p>
+        <p>
+          Traditional methods depend solely on pseudo classes like :hover and :active to provide basic interactivity when a user’s mouse is within the boundaries of it’s element. But these methods are limited because they require user intent to align with your goals long before they discover the styles hidden behind :hover.
+        </p>
+        <p>
+          Well, that’s where Reactive Listeners come into play. Reactive Listeners allow us to affect change over an element from a distance that otherwise would not be possible. In this example, we detect the proximity of the mouse pointer to an element which reacts more vibrantly the closer to user’s mouse comes to it. Here we use this effect to draw attention to some additional information contained in a hidden div, but many more practical uses abound, like drawing attention to a share button, or CTA.
+        </p>
+        <p>
+          This neat little trick uses the psychology of change detection; the human brain is wired to notice even the most minute micro changes in an otherwise static environment. In the past, designers used animations tied to timers, scrollheight, page loads etc. to take advantage of this mental hack. All can be effective methods, but require a specific set of criteria to be met that may be out of sync with the user’s focus.
+        </p>
+
+        <p>
+          Enough lecturing, let’s find out how it works:
+        </p>
       </div>
     </div>
   </div>

@@ -85,7 +85,8 @@
 
 .rl-title,
 .rl-subtitle,
-.rl-body {
+.rl-body,
+.rl-section-title {
   color: white;
   font-family: Proxima Nova, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
 }
@@ -104,8 +105,17 @@
   margin-bottom: 10px;
 }
 
+.rl-section-title {
+  max-width: 430px;
+}
+
+.rl-section-title h2{
+  font-size: 24px;
+  padding: 6px;
+  font-weight: 600;
+}
+
 .main-content {
   padding-top: 40px;
-
 }
 
