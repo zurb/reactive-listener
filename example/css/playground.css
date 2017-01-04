@@ -64,12 +64,14 @@
   content: "-";
 }
 
-
-
 .bg-container {
   background: url('../img/bg-tile-reactive.png') repeat-x;
   width: 100%;
   height: 468px;
+}
+
+p {
+  font-family: Proxima Nova, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
 }
 
 .title-box {
