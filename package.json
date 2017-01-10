@@ -1,0 +1,13 @@
+{
+  "name": "reactive-listener",
+  "version": "0.0.1",
+  "description": "JavaScript library for building reactive animations",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zurb/reactive-listener.git"
+  },
+  "author": "Kevin Ball <kball@zurb.com>",
+  "license": "MIT"
+}
